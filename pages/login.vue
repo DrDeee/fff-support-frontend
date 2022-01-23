@@ -1,5 +1,6 @@
 <template>
   <b-message type="is-info">
+    {{ $config.TEST }}
     <b>Hey</b><br />
     <em>Dies ist das Support-Tool von Fridays for Future DE :)</em> <br />
     <br />

@@ -137,15 +137,24 @@ export default {
         this.moveData.addedColumn = column;
       }
       if (this.moveData.added != null && this.moveData.removed != null) {
-        console.log(this.moveData);
-        this[this.moveData.addedColumn].splice(
-          this.moveData.added,
-          0,
-          this[this.moveData.removedColumn].splice(
-            this.moveData.removedIndex,
-            1
-          )[0]
-        );
+        if (this.moveData.addedColumn === this.moveData.removedColumn) {
+          let ticket = this[this.moveData.removedColumn][this.moveData.removed];
+          this[this.moveData.removedColumn].splice(this.moveData.removed, 1);
+          this[this.moveData.addedColumn].splice(
+            this.moveData.added,
+            0,
+            ticket
+          );
+        } else {
+          this[this.moveData.addedColumn].splice(
+            this.moveData.added,
+            0,
+            this[this.moveData.removedColumn].splice(
+              this.moveData.removedIndex,
+              1
+            )[0]
+          );
+        }
         this.moveData = {
           added: null,
           addedColumn: null,

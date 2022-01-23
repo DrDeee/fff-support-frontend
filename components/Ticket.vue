@@ -23,7 +23,7 @@
         :key="ticket.users.indexOf(author)"
         class="mr-1"
       >
-        <b-tooltip position="is-bottom">
+        <b-tooltip position="is-top">
           <figure class="p-1 has-background-grey-lighter rounded rect">
             <b-icon icon="user" />
           </figure>

@@ -1,9 +1,10 @@
 import config from "./config"
+
 export default {
     target: 'server',
-    ssr: true,
+    ssr: false,
     head: {
-        title: 'Techsupport',
+        title: 'MessageDesk',
         htmlAttrs: {
             lang: 'de'
         },
@@ -32,7 +33,8 @@ export default {
         'nuxt-buefy',
         'nuxt-fontawesome',
         '@nuxtjs/axios',
-        '@nuxtjs/auth-next'
+        '@nuxtjs/auth-next',
+        '@nuxtjs/critters'
     ],
 
     axios: {},
@@ -45,15 +47,30 @@ export default {
     fontawesome: {
         imports: [{
                 set: '@fortawesome/free-solid-svg-icons',
-                icons: ['fas']
+                icons: [
+                    'faBookmark',
+                    'faUser',
+                    'faUsers',
+                    'faPlusCircle',
+                    'faArrowCircleLeft',
+                    'faArrowUp',
+                    'faEnvelope',
+                    'faLock',
+                    'faSignOutAlt',
+                    'faSignInAlt'
+                ]
             },
             {
                 set: '@fortawesome/free-regular-svg-icons',
-                icons: ['far']
+                icons: ['faBookmark']
             },
             {
                 set: '@fortawesome/free-brands-svg-icons',
-                icons: ['fab']
+                icons: [
+                    'faTelegram',
+                    'faDiscord',
+                    'faWhatsapp'
+                ]
             }
         ]
     },
@@ -83,6 +100,9 @@ export default {
 
     },
     router: {
-        middleware: ['auth']
+        middleware: process.env.DEV_NO_AUTH === 'true' ? [] : ['auth']
+    },
+    publicRuntimeConfiguration: {
+        DEV_NO_AUTH: process.env.DEV_NO_AUTH == 'true'
     }
 }

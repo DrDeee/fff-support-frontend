@@ -1,3 +1,5 @@
+import { Module, VuexModule, VuexMutation } from "nuxt-property-decorator";
+
 interface Group {
   id: string;
   name: string;
@@ -14,10 +16,12 @@ interface Group {
   };
 }
 
-import { Module, VuexModule, Mutation } from "vuex-module-decorators";
-
-@Module
-export default class IndexState extends VuexModule {
+@Module({
+  name: "index",
+  namespaced: false,
+  stateFactory: false,
+})
+class IndexStore extends VuexModule {
   activeGroup?: string = "asfasasasfasf";
   groups: Group[] = [
     {
@@ -67,14 +71,17 @@ export default class IndexState extends VuexModule {
     },
   ];
 
-  @Mutation
+  @VuexMutation
   clear() {
     this.activeGroup = undefined;
     this.groups = [];
   }
 
-  @Mutation
+  @VuexMutation
   setCurrentGroup(groupId: string) {
     this.activeGroup = groupId;
   }
 }
+
+export const state = () => IndexStore.state;
+export const mutations = IndexStore.mutations;
