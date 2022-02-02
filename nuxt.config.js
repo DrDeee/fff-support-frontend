@@ -19,7 +19,9 @@ export default {
         ]
     },
 
-    css: [],
+    css: [
+        '~/assets/scss/theme.scss'
+    ],
 
     plugins: [],
 
@@ -42,7 +44,8 @@ export default {
     buefy: {
         materialDesignIcons: false,
         defaultIconPack: 'fas',
-        defaultIconComponent: 'font-awesome-icon'
+        defaultIconComponent: 'font-awesome-icon',
+        css: false
     },
     fontawesome: {
         imports: [{
