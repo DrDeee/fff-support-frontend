@@ -1,9 +1,9 @@
 <template>
-  <div class="p-3">
-    <div class="columns">
+  <div :class="{ 'p-3': IS_LOGGED_IN }">
+    <div v-if="IS_LOGGED_IN" class="columns">
       <div class="column is-3">
         <div class="box">
-          <div v-if="$auth.loggedIn">
+          <div>
             <b-button
               @click="logout()"
               class="mb-1"
@@ -13,72 +13,26 @@
               expanded
               >Abmelden</b-button
             >
-            <nav
+            <GroupSummary
               v-for="group in groups"
               :key="group.id"
+              :group="group"
               :class="{ panel: true, ' is-info': group.id === activeGroup }"
-            >
-              <p
-                class="panel-heading mouse"
-                @click="$store.commit('setCurrentGroup', group.id)"
-              >
-                {{ group.name }}
-              </p>
-              <a class="panel-block">
-                <span class="panel-icon">{{ group.tickets.open }}</span>
-                Offen
-                <b-tag
-                  v-if="group.notifications.open != 0"
-                  class="ml-2"
-                  type="is-success"
-                  size="is-small"
-                  >{{ group.notifications.open }} Neu!</b-tag
-                >
-              </a>
-              <a class="panel-block">
-                <span class="panel-icon">{{ group.tickets.progress }}</span>
-                In Bearbeitung
-                <b-tag
-                  v-if="group.notifications.progress != 0"
-                  class="ml-2"
-                  type="is-success"
-                  size="is-small"
-                  >{{ group.notifications.progress }} Neu!</b-tag
-                >
-              </a>
-              <a class="panel-block">
-                <span class="panel-icon">{{ group.tickets.closed }}</span>
-                Abgeschlossen
-                <b-tag
-                  v-if="group.notifications.closed != 0"
-                  class="ml-2"
-                  type="is-success"
-                  size="is-small"
-                  >{{ group.notifications.closed }} Neu!</b-tag
-                >
-              </a>
-              <a v-if="group.canManage" class="panel-block">
-                <b-button
-                  :type="activeGroup === group.id ? 'is-info' : undefined"
-                  expanded
-                  >Verwalten</b-button
-                >
-              </a>
-            </nav>
+            />
             <b-message class="mt-1" v-if="groups.length == 0" type="is-warning"
               >Du gehörst noch keiner Gruppe an. Bitte melde dich bei einem
               Gruppenadmin, dass du nun in die Gruppe aufgenommen werden
               kannst.</b-message
             >
           </div>
-          <b-message v-else type="is-warning">
-            Du musst dich anmelden, um auf deine Gruppen zugreifen zu können :(
-          </b-message>
         </div>
       </div>
       <div class="column fullheight">
         <Nuxt />
       </div>
+    </div>
+    <div v-else>
+      <Nuxt />
     </div>
   </div>
 </template>
@@ -88,6 +42,10 @@ import { Component, Vue } from "nuxt-property-decorator";
 
 @Component
 export default class DefaultLayout extends Vue {
+  get IS_LOGGED_IN() {
+    return this.$auth.loggedIn || (this.$router.currentRoute.name !== 'login' &&this.$config.DEV_NO_AUTH)
+  }
+
   get groups() {
     return this.$store.state.groups;
   }
@@ -102,6 +60,7 @@ export default class DefaultLayout extends Vue {
   }
 }
 </script>
+
 <style>
 .mouse {
   cursor: pointer;

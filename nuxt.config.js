@@ -107,18 +107,14 @@ export default {
   router: {
     middleware: process.env.DEV_NO_AUTH === "true" ? [] : ["auth"],
   },
-  publicRuntimeConfiguration: {
-    DEV_NO_AUTH: process.env.DEV_NO_AUTH == "true",
+  publicRuntimeConfig: {
+    DEV_NO_AUTH: process.env.DEV_NO_AUTH === "true",
     axios: {
+      baseURL: process.env.BASE_URL || "http://localhost:3000",
       browserBaseURL:
         process.env.BROWSER_BASE_URL ||
         process.env.BASE_URL ||
         "http://localhost:3000",
-    },
-  },
-  privateRuntimeConfig: {
-    axios: {
-      baseURL: process.env.BASE_URL || "http://localhost:3000",
     },
   },
 };

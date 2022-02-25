@@ -6,7 +6,7 @@
           <div class="card-header">
             <div class="card-header-title">Offen</div>
             <div class="card-header-icon">
-              <b-tag type="is-info">6</b-tag>
+              <b-tag type="is-info">{{ open.length }}</b-tag>
             </div>
           </div>
           <div class="card-content">
@@ -23,7 +23,7 @@
           <div class="card-header">
             <div class="card-header-title">In Bearbeitung</div>
             <div class="card-header-icon">
-              <b-tag type="is-info">6</b-tag>
+              <b-tag type="is-info">{{ progress.length }}</b-tag>
             </div>
           </div>
           <div class="card-content">
@@ -40,7 +40,7 @@
           <div class="card-header">
             <div class="card-header-title">Abgeschlossen</div>
             <div class="card-header-icon">
-              <b-tag type="is-info">6</b-tag>
+              <b-tag type="is-info">{{ finished.length }}</b-tag>
             </div>
           </div>
           <div class="card-content">
