@@ -1,79 +1,55 @@
 <template>
-  <div v-if="group" class="columns">
-    <div class="column is-one-quarter">
-      <div class="px-3">
-        <GroupSummary
-          :group="group"
-          :active="true"
-          :linkToTickets="false"
-          :mouse="false"
-        />>
-      </div>
-    </div>
+  <div class="columns">
     <div class="column">
-      <div>
-        <div class="columns">
-          <div class="column">
-            <div class="card">
-              <div class="card-header">
-                <div class="card-header-title">Offen</div>
-                <div class="card-header-icon">
-                  <b-tag type="is-info">{{ open.length }}</b-tag>
-                </div>
-              </div>
-              <div class="card-content">
-                <Container group-name="dnd" @drop="drop('open', $event)">
-                  <Draggable v-for="ticket in open" :key="ticket.id">
-                    <ticket :ticket="ticket"
-                  /></Draggable>
-                </Container>
-              </div>
-            </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">Offen</div>
+          <div class="card-header-icon">
+            <b-tag type="is-info">{{ open.length }}</b-tag>
           </div>
-          <div class="column">
-            <div class="card">
-              <div class="card-header">
-                <div class="card-header-title">In Bearbeitung</div>
-                <div class="card-header-icon">
-                  <b-tag type="is-info">{{ progress.length }}</b-tag>
-                </div>
-              </div>
-              <div class="card-content">
-                <Container group-name="dnd" @drop="drop('progress', $event)">
-                  <Draggable v-for="ticket in progress" :key="ticket.id">
-                    <ticket :ticket="ticket"
-                  /></Draggable>
-                </Container>
-              </div>
-            </div>
-          </div>
-          <div class="column">
-            <div class="card">
-              <div class="card-header">
-                <div class="card-header-title">Abgeschlossen</div>
-                <div class="card-header-icon">
-                  <b-tag type="is-info">{{ finished.length }}</b-tag>
-                </div>
-              </div>
-              <div class="card-content">
-                <Container group-name="dnd" @drop="drop('finished', $event)">
-                  <Draggable v-for="ticket in finished" :key="ticket.id">
-                    <ticket :ticket="ticket"
-                  /></Draggable>
-                </Container>
-              </div>
-            </div>
-          </div>
+        </div>
+        <div class="card-content">
+          <Container group-name="dnd" @drop="drop('open', $event)">
+            <Draggable v-for="ticket in open" :key="ticket.id">
+              <ticket :ticket="ticket" :type="ticket.type || 'dark'"
+            /></Draggable>
+          </Container>
         </div>
       </div>
     </div>
-  </div>
-  <div v-else class="columns is-centered">
-    <div class="column is-one-third">
-      <b-message type="is-warning"
-        ><div class="mb-1">Du musst zuerst eine Gruppe auswählen:</div>
-        <GroupSelector
-      /></b-message>
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">In Bearbeitung</div>
+          <div class="card-header-icon">
+            <b-tag type="is-info">{{ progress.length }}</b-tag>
+          </div>
+        </div>
+        <div class="card-content">
+          <Container group-name="dnd" @drop="drop('progress', $event)">
+            <Draggable v-for="ticket in progress" :key="ticket.id">
+              <ticket :ticket="ticket" :type="ticket.type || 'dark'"
+            /></Draggable>
+          </Container>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">Abgeschlossen</div>
+          <div class="card-header-icon">
+            <b-tag type="is-info">{{ finished.length }}</b-tag>
+          </div>
+        </div>
+        <div class="card-content">
+          <Container group-name="dnd" @drop="drop('finished', $event)">
+            <Draggable v-for="ticket in finished" :key="ticket.id">
+              <ticket :ticket="ticket" :type="ticket.type || 'dark'"
+            /></Draggable>
+          </Container>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -82,11 +58,7 @@ import { Vue, Component } from "nuxt-property-decorator";
 const { Draggable, Container } = require("vue-dndrop");
 
 @Component({ components: { Draggable, Container } })
-export default class GroupIndexView extends Vue {
-  get group() {
-    return this.$store.state.selectedGroup;
-  }
-
+export default class TicketKanban extends Vue {
   moveData: any = {
     added: null,
     addedColumn: null,
@@ -96,6 +68,7 @@ export default class GroupIndexView extends Vue {
   open = [
     {
       id: 1,
+      type: 'danger',
       title: "Cloud-Account benötigt",
       description:
         "Hi, wir wollen für unsere OG gerne einen Cloud-Account bekommen ;)",

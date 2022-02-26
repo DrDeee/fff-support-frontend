@@ -12,6 +12,7 @@ export function state(): IndexState {
         id: "asfasasasfasf",
         name: "Website-AG",
         canManage: true,
+        isRoot: true,
         tickets: {
           open: 5,
           progress: 3,
@@ -142,9 +143,9 @@ export function state(): IndexState {
           progress: 5,
           closed: 0,
         },
-      }
+      },
     ],
-    selectedGroup: null
+    selectedGroup: null,
   };
 }
 export const mutations = {

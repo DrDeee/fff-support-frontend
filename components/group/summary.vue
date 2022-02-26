@@ -1,15 +1,23 @@
 <template>
   <nav :class="{ panel: true, 'is-primary': active }">
     <div
-      :class="{ 'panel-heading': true, mouse: mouse, flex: true }"
+      v-if="groupName"
+      class="panel-heading is-flex is-justify-content-space-between"
+      :class="{ mouse: mouse }"
       @click="$emit('click')"
     >
       <div>{{ group.name }}</div>
       <div>
-        <b-tooltip multilined position="is-right" type="is-info">
+        <b-tooltip
+          v-if="group.isRoot"
+          multilined
+          position="is-right"
+          type="is-info"
+        >
           <template #content
             ><b>Root-Gruppe</b><br />Dies ist die Admin-Gruppe von MessageDesk.
-            Hierher werden alle anstößigen Tickets gemeldet und deren Ersteller blockiert.</template
+            Hierher werden alle anstößigen Tickets gemeldet und deren Ersteller
+            blockiert.</template
           >
           <b-icon icon="crown"
         /></b-tooltip>
@@ -48,22 +56,6 @@
         >{{ group.notifications.closed }} Neu!</b-tag
       >
     </a>
-    <a class="panel-block no-hover" v-if="group.canManage || linkToTickets">
-      <b-button
-        v-if="linkToTickets"
-        :type="active ? 'is-info' : undefined"
-        expanded
-        :class="{ 'mr-1': group.canManage }"
-        >Gruppe wählen</b-button
-      >
-      <b-button
-        v-if="group.canManage"
-        :type="active ? 'is-info' : undefined"
-        expanded
-        :class="{ 'ml-1': linkToTickets }"
-        >Verwalten</b-button
-      >
-    </a>
   </nav>
 </template>
 <script lang="ts">
@@ -85,21 +77,16 @@ export default class GroupSummary extends Vue {
     required: false,
     default: true,
   })
-  linkToTickets!: boolean;
-
+  mouse!: boolean;
   @Prop({
     required: false,
     default: true,
   })
-  mouse!: boolean;
+  groupName!: boolean;
 }
 </script>
 
 <style scoped>
-.flex {
-  display: flex;
-  justify-content: space-between;
-}
 nav.panel {
   height: 100%;
 }

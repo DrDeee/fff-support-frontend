@@ -1,11 +1,11 @@
 @charset "utf-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Jost');
+@import url("https://fonts.googleapis.com/css2?family=Jost");
 
 $font-main: "jost", sans-serif;
 $family-sans-serif: $font-main;
 
-$primary: #1da64a;
+$primary: #1b7340;
 $link: #1b7340;
 $info: #90d3ed;
 $success: #20b953;
@@ -14,3 +14,19 @@ $danger: #f5333f;
 
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
+
+.w-full {
+  width: 100%;
+}
+
+html {
+  background-color: findLightColor($primary);
+}
+
+.panel {
+  background-color: white;
+}
+
+.mouse {
+  cursor: pointer;
+}

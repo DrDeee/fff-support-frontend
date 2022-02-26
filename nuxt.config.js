@@ -46,8 +46,11 @@ export default {
       {
         set: "@fortawesome/free-solid-svg-icons",
         icons: [
-          "faCrown",
+          "faBan",
           "faBookmark",
+          "faCrown",
+          "faCheck",
+          "faEdit",
           "faUser",
           "faUsers",
           "faPlusCircle",
@@ -55,6 +58,7 @@ export default {
           "faArrowUp",
           "faEnvelope",
           "faLock",
+          "faTrash",
           "faSignOutAlt",
           "faSignInAlt",
         ],
@@ -109,6 +113,8 @@ export default {
     middleware: process.env.DEV_NO_AUTH === "true" ? [] : ["auth"],
   },
   publicRuntimeConfig: {
+    SUPPORT: "https://fffutu.re/pirna",
+    IMPRESSUM: "https://fridaysforfuture.de",
     DEV_NO_AUTH: process.env.DEV_NO_AUTH === "true",
     axios: {
       baseURL: process.env.BASE_URL || "http://localhost:3000",
