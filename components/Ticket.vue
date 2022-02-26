@@ -33,7 +33,7 @@
         >
       </div>
       <div class="mr-1">
-        <b-tooltip position="is-bottom" type="is-info">
+        <b-tooltip position="is-top" type="is-info">
           <figure class="p-1 rect">
             <b-icon icon="plus-circle" />
           </figure>

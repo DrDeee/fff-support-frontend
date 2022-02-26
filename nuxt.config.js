@@ -46,6 +46,7 @@ export default {
       {
         set: "@fortawesome/free-solid-svg-icons",
         icons: [
+          "faCrown",
           "faBookmark",
           "faUser",
           "faUsers",

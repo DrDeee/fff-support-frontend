@@ -1,39 +1,42 @@
 <template>
-  <div :class="{ 'p-3': IS_LOGGED_IN }">
-    <div v-if="IS_LOGGED_IN" class="columns">
-      <div class="column is-3">
-        <div class="box">
-          <div>
-            <b-button
-              @click="logout()"
-              class="mb-1"
-              type="is-dark"
-              size="is-small"
-              icon-left="sign-out-alt"
-              expanded
-              >Abmelden</b-button
-            >
-            <GroupSummary
+  <div>
+    <div v-if="IS_LOGGED_IN">
+      <b-navbar shadow fixedTop transparent>
+        <template #brand>
+          <b-navbar-item tag="router-link" :to="{ path: '/' }">
+            <img src="~/assets/img/logo.png" alt="MessageDesk Logo" />
+          </b-navbar-item>
+        </template>
+        <template #start>
+          <b-navbar-dropdown hoverable>
+            <template #label>
+              <div style="min-width: 10vw; text-align: center">
+                <em
+                  v-if="!selectedGroup"
+                  >Gruppe auswählen</em
+                >
+                <div v-else>{{ selectedGroup.name }}</div>
+              </div>
+            </template>
+            <b-navbar-item
               v-for="group in groups"
               :key="group.id"
-              :group="group"
-              :class="{ panel: true, ' is-info': group.id === activeGroup }"
-            />
-            <b-message class="mt-1" v-if="groups.length == 0" type="is-warning"
-              >Du gehörst noch keiner Gruppe an. Bitte melde dich bei einem
-              Gruppenadmin, dass du nun in die Gruppe aufgenommen werden
-              kannst.</b-message
+              :active="selectedGroup && selectedGroup.id === group.id"
+              @click="selectGroup(group)"
+              >{{ group.name }}</b-navbar-item
             >
-          </div>
-        </div>
-      </div>
-      <div class="column fullheight">
+          </b-navbar-dropdown>
+        </template>
+        <template #end>
+          <b-navbar-item @click="$router.push('/profil')">Profil</b-navbar-item>
+          <b-navbar-item @click="logout()">Abmelden</b-navbar-item>
+        </template>
+      </b-navbar>
+      <div class="p-3 bg-light">
         <Nuxt />
       </div>
     </div>
-    <div v-else>
-      <Nuxt />
-    </div>
+    <Nuxt v-else />
   </div>
 </template>
 
@@ -43,19 +46,25 @@ import { Component, Vue } from "nuxt-property-decorator";
 @Component
 export default class DefaultLayout extends Vue {
   get IS_LOGGED_IN() {
-    return this.$auth.loggedIn || (this.$router.currentRoute.name !== 'login' &&this.$config.DEV_NO_AUTH)
+    return this.$config.DEV_NO_AUTH
+      ? this.$router.currentRoute.name !== "login" && this.$config.DEV_NO_AUTH
+      : this.$auth.loggedIn;
   }
 
   get groups() {
     return this.$store.state.groups;
   }
 
-  get activeGroup() {
-    return this.$store.state.activeGroup;
+  get selectedGroup() {
+    return this.$store.state.selectedGroup;
   }
 
-  logout() {
-    this.$auth.logout();
+  selectGroup(group: any) {
+    this.$store.commit("selectGroup", group.id);
+  }
+
+  async logout() {
+    await this.$auth.logout();
     this.$router.push("/login");
   }
 }
