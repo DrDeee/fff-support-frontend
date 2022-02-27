@@ -1,8 +1,8 @@
 import config from "./config";
 
 export default {
-  target: "server",
-  ssr: false,
+  target: process.env.TARGET || "server",
+  ssr: process.env.SSR ? process.env.SSR === "true" : false,
   head: {
     title: "MessageDesk",
     htmlAttrs: {
@@ -110,6 +110,7 @@ export default {
     },
   },
   router: {
+    base: process.env.BASE_PATH || '/',
     middleware: process.env.DEV_NO_AUTH === "true" ? [] : ["auth"],
   },
   publicRuntimeConfig: {
