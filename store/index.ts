@@ -9,8 +9,8 @@ export function state(): IndexState {
   return {
     groups: [
       {
-        id: "asfasasasfasf",
-        name: "Website-AG",
+        id: "root",
+        name: "MessageDesk Admin",
         canManage: true,
         isRoot: true,
         tickets: {

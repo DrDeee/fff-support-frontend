@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="panel-block p-0">
-            <b-button tag="a" size="is-small" type="is-text" expanded
+            <b-button tag="a" size="is-small" type="is-text" expanded @click="$router.push('/group/add-members')"
               >Mitglied hinzufügen
             </b-button>
           </div>

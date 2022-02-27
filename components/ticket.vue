@@ -4,7 +4,7 @@
       <p class="title is-4">{{ ticket.title }}</p>
       <p @click="test()">
         <b-icon
-          class="mouse"
+          class="mouse normal"
           :pack="ticket.claimed ? 'fas' : 'far'"
           icon="bookmark"
         />
